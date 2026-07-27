@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block header %}Settings{% endblock %}
+{% block subheader %}Monitoring thresholds used by the server-side logic.{% endblock %}
+
+{% block content %}
+<div class="panel-card">
+  <h6>Monitoring Thresholds (server-configured)</h6>
+  <table class="table table-jal">
+    <tbody>
+      <tr><td>Low usage threshold</td><td>&lt; 5 units</td></tr>
+      <tr><td>Possibly Failed after</td><td>24 hours without successful flow</td></tr>
+      <tr><td>Out of Service after</td><td>48 hours without successful flow, or 3 consecutive flow failures</td></tr>
+      <tr><td>Stuck sensor window</td><td>5 identical consecutive readings</td></tr>
+      <tr><td>Usage count plausible range</td><td>0 – 500</td></tr>
+    </tbody>
+  </table>
+  <p class="text-muted small mb-0">These thresholds live in <code>services/monitoring.py</code> and can be tuned for a real deployment.</p>
+</div>
+{% endblock %}

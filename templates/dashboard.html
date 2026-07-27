@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block header %}JalSathi{% endblock %}
+{% block subheader %}Real-time visibility into village water-point health and repair priorities.{% endblock %}
+
+{% block content %}
+<div id="loadingState" class="state-box"><i class="bi bi-arrow-repeat"></i>Loading water-point data...</div>
+<div id="errorState" class="state-box d-none"><i class="bi bi-wifi-off"></i>Unable to load data. Please try again.
+  <div class="mt-2"><button class="btn btn-sm btn-outline-primary" onclick="loadDashboard()">Retry</button></div>
+</div>
+
+<div id="dashboardContent" class="d-none">
+
+  <div class="d-flex justify-content-end gap-2 mb-3">
+    <button class="btn btn-sm btn-jal-teal btn-teal" onclick="simulateFailure()"><i class="bi bi-exclamation-triangle"></i> Simulate Water Point Failure</button>
+    <button class="btn btn-sm btn-outline-success" onclick="simulateRecovery()"><i class="bi bi-check-circle"></i> Simulate Recovery</button>
+  </div>
+
+  <div class="row g-3 mb-3" id="summaryCards"></div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-6">
+      <div class="chart-card">
+        <h6><i class="bi bi-pie-chart"></i> Water Point Health</h6>
+        <canvas id="healthChart" height="200"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="chart-card">
+        <h6><i class="bi bi-graph-up"></i> Usage Trend</h6>
+        <canvas id="usageTrendChart" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-3">
+    <div class="col-lg-6">
+      <div class="chart-card">
+        <h6><i class="bi bi-bar-chart"></i> Repair Priority</h6>
+        <canvas id="priorityChart" height="200"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="chart-card">
+        <h6><i class="bi bi-geo"></i> Habitation-wise Failures</h6>
+        <canvas id="habitationChart" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-card">
+    <h6><i class="bi bi-tools"></i> Water Points Requiring Attention</h6>
+    <div class="table-responsive">
+      <table class="table table-jal align-middle">
+        <thead>
+          <tr>
+            <th>Priority</th><th>Water Point</th><th>Habitation</th><th>Status</th>
+            <th>Last Working</th><th>Downtime</th><th>Last Usage</th><th>Sensor Health</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="priorityTableBody"></tbody>
+      </table>
+    </div>
+    <div id="priorityEmpty" class="state-box d-none"><i class="bi bi-emoji-smile"></i>All water points are operational.</div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

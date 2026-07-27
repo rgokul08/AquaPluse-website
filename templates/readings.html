@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Usage Readings{% endblock %}
+{% block header %}Usage Readings{% endblock %}
+{% block subheader %}Search, filter and sort all recorded water-point readings.{% endblock %}
+
+{% block content %}
+<div class="panel-card mb-3">
+  <div class="row g-2 align-items-end">
+    <div class="col-md-3">
+      <label class="form-label small">Water Point ID</label>
+      <input id="fWaterpoint" class="form-control form-control-sm" placeholder="e.g. WP001">
+    </div>
+    <div class="col-md-3">
+      <label class="form-label small">Habitation</label>
+      <input id="fHabitation" class="form-control form-control-sm" placeholder="e.g. Anna Nagar">
+    </div>
+    <div class="col-md-2">
+      <label class="form-label small">Status</label>
+      <select id="fStatus" class="form-select form-select-sm">
+        <option value="">All</option>
+        <option>Operational</option>
+        <option>Low Usage</option>
+        <option>Possibly Failed</option>
+        <option>Out of Service</option>
+        <option>Sensor Fault</option>
+        <option>Data Error</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label small">Flow Status</label>
+      <select id="fFlow" class="form-select form-select-sm">
+        <option value="">All</option>
+        <option value="true">OK</option>
+        <option value="false">Failed</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label small">Valid / Invalid</label>
+      <select id="fValid" class="form-select form-select-sm">
+        <option value="">All</option>
+        <option value="valid">Valid</option>
+        <option value="invalid">Invalid</option>
+      </select>
+    </div>
+  </div>
+  <div class="row g-2 align-items-end mt-2">
+    <div class="col-md-3">
+      <label class="form-label small">Sort By</label>
+      <select id="fSort" class="form-select form-select-sm">
+        <option value="recorded_at">Latest Reading</option>
+        <option value="priority">Priority</option>
+        <option value="downtime">Downtime</option>
+        <option value="usage">Usage Count</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-sm btn-jal-teal" onclick="applyFilters()"><i class="bi bi-funnel"></i> Apply</button>
+      <button class="btn btn-sm btn-outline-secondary" onclick="resetFilters()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div id="loadingState" class="state-box"><i class="bi bi-arrow-repeat"></i>Loading water-point data...</div>
+<div id="errorState" class="state-box d-none"><i class="bi bi-wifi-off"></i>Unable to load data. Please try again.
+  <div class="mt-2"><button class="btn btn-sm btn-outline-primary" onclick="applyFilters()">Retry</button></div>
+</div>
+
+<div id="resultsWrap" class="d-none">
+  <div class="mb-2 text-muted small" id="countLabel"></div>
+  <div class="panel-card">
+    <div class="table-responsive">
+      <table class="table table-jal align-middle">
+        <thead>
+          <tr>
+            <th>Water Point</th><th>Habitation</th><th>Flow</th><th>Usage</th>
+            <th>Recorded At</th><th>Validation</th><th>Status</th><th>Priority</th>
+          </tr>
+        </thead>
+        <tbody id="readingsBody"></tbody>
+      </table>
+    </div>
+    <div id="emptyState" class="state-box d-none"><i class="bi bi-inbox"></i>No water-point readings found.</div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/readings.js') }}"></script>
+{% endblock %}

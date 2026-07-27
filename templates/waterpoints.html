@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Water Points{% endblock %}
+{% block header %}Water Points{% endblock %}
+{% block subheader %}All monitored village water points.{% endblock %}
+
+{% block content %}
+<div id="loadingState" class="state-box"><i class="bi bi-arrow-repeat"></i>Loading water-point data...</div>
+<div id="errorState" class="state-box d-none"><i class="bi bi-wifi-off"></i>Unable to load data. Please try again.
+  <div class="mt-2"><button class="btn btn-sm btn-outline-primary" onclick="init()">Retry</button></div>
+</div>
+
+<div id="listView" class="d-none">
+  <div class="panel-card mb-3">
+    <div class="row g-2">
+      <div class="col-md-4">
+        <input id="searchBox" class="form-control" placeholder="Search Water Point ID or Habitation">
+      </div>
+    </div>
+  </div>
+  <div id="cardsGrid" class="row g-3"></div>
+  <div id="emptyState" class="state-box d-none"><i class="bi bi-inbox"></i>No water-point readings found.</div>
+</div>
+
+<div id="detailView" class="d-none">
+  <button class="btn btn-sm btn-outline-secondary mb-3" onclick="showList()"><i class="bi bi-arrow-left"></i> Back to list</button>
+  <div id="detailContent"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/waterpoints.js') }}"></script>
+{% endblock %}

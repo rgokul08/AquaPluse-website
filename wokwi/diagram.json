@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "author": "JalSathi Team",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp32",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot1",
+      "top": -20,
+      "left": 200,
+      "attrs": { "value": "50" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_status",
+      "top": 60,
+      "left": 220,
+      "attrs": { "color": "green" }
+    }
+  ],
+  "connections": [
+    ["esp32:D34", "pot1:SIG", "green", []],
+    ["pot1:VCC", "esp32:3V3", "red", []],
+    ["pot1:GND", "esp32:GND.1", "black", []],
+    ["led_status:A", "esp32:D2", "yellow", []],
+    ["led_status:C", "esp32:GND.2", "black", []]
+  ],
+  "dependencies": {}
+}
