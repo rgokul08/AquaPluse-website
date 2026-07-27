@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block header %}Reports{% endblock %}
+{% block subheader %}Summary statistics for panchayat records.{% endblock %}
+
+{% block content %}
+<div id="loadingState" class="state-box"><i class="bi bi-arrow-repeat"></i>Loading water-point data...</div>
+<div id="reportContent" class="d-none">
+  <div class="row g-3 mb-3" id="reportCards"></div>
+  <div class="text-end">
+    <a href="/api/reports/export-csv" class="btn btn-jal-teal btn-teal"><i class="bi bi-download"></i> Export CSV</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function loadReport() {
+  try {
+    const res = await fetch("/api/reports");
+    const data = await res.json();
+    document.getElementById("loadingState").classList.add("d-none");
+    document.getElementById("reportContent").classList.remove("d-none");
+
+    const items = [
+      ["Total Readings", data.total_readings, "bi-list-ul", "var(--jal-blue)"],
+      ["Valid Readings", data.valid_readings, "bi-check-circle", "var(--jal-green)"],
+      ["Invalid Readings", data.invalid_readings, "bi-x-circle", "var(--jal-red)"],
+      ["Sensor Faults", data.sensor_faults, "bi-cpu", "#8a6d00"],
+      ["Failed Water Points", data.failed_waterpoints, "bi-exclamation-triangle", "var(--jal-orange)"],
+      ["Average Downtime (hrs)", data.average_downtime_hours, "bi-clock-history", "var(--jal-teal)"],
+      ["Highest Priority WP", data.highest_priority_waterpoint || "None", "bi-flag", "var(--jal-red)"],
+    ];
+
+    document.getElementById("reportCards").innerHTML = items.map(([label, value, icon, color]) => `
+      <div class="col-6 col-lg-3">
+        <div class="summary-card">
+          <div class="icon-box" style="background:${color}"><i class="bi ${icon}"></i></div>
+          <div><div class="value">${value}</div><div class="label">${label}</div></div>
+        </div>
+      </div>
+    `).join("");
+  } catch (err) {
+    document.getElementById("loadingState").innerHTML = '<i class="bi bi-wifi-off"></i>Unable to load data. Please try again.';
+  }
+}
+loadReport();
+</script>
+{% endblock %}

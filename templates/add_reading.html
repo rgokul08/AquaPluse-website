@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Add Reading{% endblock %}
+{% block header %}Add Reading{% endblock %}
+{% block subheader %}Manually record a water-point usage reading.{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="form-card">
+      <form id="readingForm">
+        <div class="mb-3">
+          <label class="form-label">Water Point ID</label>
+          <input class="form-control" id="waterpoint_id" placeholder="WP001" required pattern="WP\d{3}">
+          <div class="form-text">Format: WP followed by 3 digits, e.g. WP001</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Habitation</label>
+          <input class="form-control" id="habitation" placeholder="Anna Nagar" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Flow Status</label>
+          <select class="form-select" id="flow_ok" required>
+            <option value="true">Flow OK</option>
+            <option value="false">Flow Failed</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Usage Count</label>
+          <input class="form-control" id="usage_count" type="number" min="0" max="500" placeholder="0 - 500">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Recorded At</label>
+          <input class="form-control" id="recorded_at" type="datetime-local" required>
+        </div>
+        <button type="submit" class="btn btn-jal-teal btn-teal w-100"><i class="bi bi-save"></i> Save Reading</button>
+      </form>
+
+      <div id="resultBox" class="mt-4 d-none"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/add_reading.js') }}"></script>
+{% endblock %}
