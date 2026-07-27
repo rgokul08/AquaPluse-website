@@ -10,27 +10,33 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as AppRouteImport } from './routes/app'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AppIndexRouteImport } from './routes/app.index'
-import { Route as AppWaterPointsRouteImport } from './routes/app.water-points'
-import { Route as AppVillagesRouteImport } from './routes/app.villages'
-import { Route as AppTechniciansRouteImport } from './routes/app.technicians'
-import { Route as AppQualityRouteImport } from './routes/app.quality'
-import { Route as AppMonitoringRouteImport } from './routes/app.monitoring'
-import { Route as AppMaintenanceRouteImport } from './routes/app.maintenance'
-import { Route as AppDevicesRouteImport } from './routes/app.devices'
-import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
-import { Route as AppAlertsRouteImport } from './routes/app.alerts'
+import { Route as AuthenticatedAppRouteImport } from './routes/_authenticated/app'
+import { Route as AuthenticatedAppIndexRouteImport } from './routes/_authenticated/app.index'
+import { Route as AuthenticatedAppWaterPointsRouteImport } from './routes/_authenticated/app.water-points'
+import { Route as AuthenticatedAppVillagesRouteImport } from './routes/_authenticated/app.villages'
+import { Route as AuthenticatedAppTechniciansRouteImport } from './routes/_authenticated/app.technicians'
+import { Route as AuthenticatedAppQualityRouteImport } from './routes/_authenticated/app.quality'
+import { Route as AuthenticatedAppMonitoringRouteImport } from './routes/_authenticated/app.monitoring'
+import { Route as AuthenticatedAppMaintenanceRouteImport } from './routes/_authenticated/app.maintenance'
+import { Route as AuthenticatedAppDevicesRouteImport } from './routes/_authenticated/app.devices'
+import { Route as AuthenticatedAppAnalyticsRouteImport } from './routes/_authenticated/app.analytics'
+import { Route as AuthenticatedAppAlertsRouteImport } from './routes/_authenticated/app.alerts'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRoute = AppRouteImport.update({
-  id: '/app',
-  path: '/app',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -38,108 +44,124 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppIndexRoute = AppIndexRouteImport.update({
+const AuthenticatedAppRoute = AuthenticatedAppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAppIndexRoute = AuthenticatedAppIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppWaterPointsRoute = AppWaterPointsRouteImport.update({
-  id: '/water-points',
-  path: '/water-points',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppVillagesRoute = AppVillagesRouteImport.update({
-  id: '/villages',
-  path: '/villages',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppTechniciansRoute = AppTechniciansRouteImport.update({
-  id: '/technicians',
-  path: '/technicians',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppQualityRoute = AppQualityRouteImport.update({
+const AuthenticatedAppWaterPointsRoute =
+  AuthenticatedAppWaterPointsRouteImport.update({
+    id: '/water-points',
+    path: '/water-points',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppVillagesRoute =
+  AuthenticatedAppVillagesRouteImport.update({
+    id: '/villages',
+    path: '/villages',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppTechniciansRoute =
+  AuthenticatedAppTechniciansRouteImport.update({
+    id: '/technicians',
+    path: '/technicians',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppQualityRoute = AuthenticatedAppQualityRouteImport.update({
   id: '/quality',
   path: '/quality',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppMonitoringRoute = AppMonitoringRouteImport.update({
-  id: '/monitoring',
-  path: '/monitoring',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppMaintenanceRoute = AppMaintenanceRouteImport.update({
-  id: '/maintenance',
-  path: '/maintenance',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppDevicesRoute = AppDevicesRouteImport.update({
+const AuthenticatedAppMonitoringRoute =
+  AuthenticatedAppMonitoringRouteImport.update({
+    id: '/monitoring',
+    path: '/monitoring',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppMaintenanceRoute =
+  AuthenticatedAppMaintenanceRouteImport.update({
+    id: '/maintenance',
+    path: '/maintenance',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppDevicesRoute = AuthenticatedAppDevicesRouteImport.update({
   id: '/devices',
   path: '/devices',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
-const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
-  id: '/analytics',
-  path: '/analytics',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppAlertsRoute = AppAlertsRouteImport.update({
+const AuthenticatedAppAnalyticsRoute =
+  AuthenticatedAppAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => AuthenticatedAppRoute,
+  } as any)
+const AuthenticatedAppAlertsRoute = AuthenticatedAppAlertsRouteImport.update({
   id: '/alerts',
   path: '/alerts',
-  getParentRoute: () => AppRoute,
+  getParentRoute: () => AuthenticatedAppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/app/alerts': typeof AppAlertsRoute
-  '/app/analytics': typeof AppAnalyticsRoute
-  '/app/devices': typeof AppDevicesRoute
-  '/app/maintenance': typeof AppMaintenanceRoute
-  '/app/monitoring': typeof AppMonitoringRoute
-  '/app/quality': typeof AppQualityRoute
-  '/app/technicians': typeof AppTechniciansRoute
-  '/app/villages': typeof AppVillagesRoute
-  '/app/water-points': typeof AppWaterPointsRoute
-  '/app/': typeof AppIndexRoute
+  '/app': typeof AuthenticatedAppRouteWithChildren
+  '/app/alerts': typeof AuthenticatedAppAlertsRoute
+  '/app/analytics': typeof AuthenticatedAppAnalyticsRoute
+  '/app/devices': typeof AuthenticatedAppDevicesRoute
+  '/app/maintenance': typeof AuthenticatedAppMaintenanceRoute
+  '/app/monitoring': typeof AuthenticatedAppMonitoringRoute
+  '/app/quality': typeof AuthenticatedAppQualityRoute
+  '/app/technicians': typeof AuthenticatedAppTechniciansRoute
+  '/app/villages': typeof AuthenticatedAppVillagesRoute
+  '/app/water-points': typeof AuthenticatedAppWaterPointsRoute
+  '/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/app/alerts': typeof AppAlertsRoute
-  '/app/analytics': typeof AppAnalyticsRoute
-  '/app/devices': typeof AppDevicesRoute
-  '/app/maintenance': typeof AppMaintenanceRoute
-  '/app/monitoring': typeof AppMonitoringRoute
-  '/app/quality': typeof AppQualityRoute
-  '/app/technicians': typeof AppTechniciansRoute
-  '/app/villages': typeof AppVillagesRoute
-  '/app/water-points': typeof AppWaterPointsRoute
-  '/app': typeof AppIndexRoute
+  '/app/alerts': typeof AuthenticatedAppAlertsRoute
+  '/app/analytics': typeof AuthenticatedAppAnalyticsRoute
+  '/app/devices': typeof AuthenticatedAppDevicesRoute
+  '/app/maintenance': typeof AuthenticatedAppMaintenanceRoute
+  '/app/monitoring': typeof AuthenticatedAppMonitoringRoute
+  '/app/quality': typeof AuthenticatedAppQualityRoute
+  '/app/technicians': typeof AuthenticatedAppTechniciansRoute
+  '/app/villages': typeof AuthenticatedAppVillagesRoute
+  '/app/water-points': typeof AuthenticatedAppWaterPointsRoute
+  '/app': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/app': typeof AppRouteWithChildren
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/app/alerts': typeof AppAlertsRoute
-  '/app/analytics': typeof AppAnalyticsRoute
-  '/app/devices': typeof AppDevicesRoute
-  '/app/maintenance': typeof AppMaintenanceRoute
-  '/app/monitoring': typeof AppMonitoringRoute
-  '/app/quality': typeof AppQualityRoute
-  '/app/technicians': typeof AppTechniciansRoute
-  '/app/villages': typeof AppVillagesRoute
-  '/app/water-points': typeof AppWaterPointsRoute
-  '/app/': typeof AppIndexRoute
+  '/_authenticated/app': typeof AuthenticatedAppRouteWithChildren
+  '/_authenticated/app/alerts': typeof AuthenticatedAppAlertsRoute
+  '/_authenticated/app/analytics': typeof AuthenticatedAppAnalyticsRoute
+  '/_authenticated/app/devices': typeof AuthenticatedAppDevicesRoute
+  '/_authenticated/app/maintenance': typeof AuthenticatedAppMaintenanceRoute
+  '/_authenticated/app/monitoring': typeof AuthenticatedAppMonitoringRoute
+  '/_authenticated/app/quality': typeof AuthenticatedAppQualityRoute
+  '/_authenticated/app/technicians': typeof AuthenticatedAppTechniciansRoute
+  '/_authenticated/app/villages': typeof AuthenticatedAppVillagesRoute
+  '/_authenticated/app/water-points': typeof AuthenticatedAppWaterPointsRoute
+  '/_authenticated/app/': typeof AuthenticatedAppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/app'
+    | '/auth'
     | '/sitemap.xml'
+    | '/app'
     | '/app/alerts'
     | '/app/analytics'
     | '/app/devices'
@@ -153,6 +175,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/sitemap.xml'
     | '/app/alerts'
     | '/app/analytics'
@@ -167,23 +190,26 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/app'
+    | '/_authenticated'
+    | '/auth'
     | '/sitemap.xml'
-    | '/app/alerts'
-    | '/app/analytics'
-    | '/app/devices'
-    | '/app/maintenance'
-    | '/app/monitoring'
-    | '/app/quality'
-    | '/app/technicians'
-    | '/app/villages'
-    | '/app/water-points'
-    | '/app/'
+    | '/_authenticated/app'
+    | '/_authenticated/app/alerts'
+    | '/_authenticated/app/analytics'
+    | '/_authenticated/app/devices'
+    | '/_authenticated/app/maintenance'
+    | '/_authenticated/app/monitoring'
+    | '/_authenticated/app/quality'
+    | '/_authenticated/app/technicians'
+    | '/_authenticated/app/villages'
+    | '/_authenticated/app/water-points'
+    | '/_authenticated/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AppRoute: typeof AppRouteWithChildren
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
@@ -196,11 +222,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app': {
-      id: '/app'
-      path: '/app'
-      fullPath: '/app'
-      preLoaderRoute: typeof AppRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -210,122 +243,132 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app/': {
-      id: '/app/'
+    '/_authenticated/app': {
+      id: '/_authenticated/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AuthenticatedAppRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/app/': {
+      id: '/_authenticated/app/'
       path: '/'
       fullPath: '/app/'
-      preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppIndexRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/water-points': {
-      id: '/app/water-points'
+    '/_authenticated/app/water-points': {
+      id: '/_authenticated/app/water-points'
       path: '/water-points'
       fullPath: '/app/water-points'
-      preLoaderRoute: typeof AppWaterPointsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppWaterPointsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/villages': {
-      id: '/app/villages'
+    '/_authenticated/app/villages': {
+      id: '/_authenticated/app/villages'
       path: '/villages'
       fullPath: '/app/villages'
-      preLoaderRoute: typeof AppVillagesRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppVillagesRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/technicians': {
-      id: '/app/technicians'
+    '/_authenticated/app/technicians': {
+      id: '/_authenticated/app/technicians'
       path: '/technicians'
       fullPath: '/app/technicians'
-      preLoaderRoute: typeof AppTechniciansRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppTechniciansRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/quality': {
-      id: '/app/quality'
+    '/_authenticated/app/quality': {
+      id: '/_authenticated/app/quality'
       path: '/quality'
       fullPath: '/app/quality'
-      preLoaderRoute: typeof AppQualityRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppQualityRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/monitoring': {
-      id: '/app/monitoring'
+    '/_authenticated/app/monitoring': {
+      id: '/_authenticated/app/monitoring'
       path: '/monitoring'
       fullPath: '/app/monitoring'
-      preLoaderRoute: typeof AppMonitoringRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppMonitoringRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/maintenance': {
-      id: '/app/maintenance'
+    '/_authenticated/app/maintenance': {
+      id: '/_authenticated/app/maintenance'
       path: '/maintenance'
       fullPath: '/app/maintenance'
-      preLoaderRoute: typeof AppMaintenanceRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppMaintenanceRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/devices': {
-      id: '/app/devices'
+    '/_authenticated/app/devices': {
+      id: '/_authenticated/app/devices'
       path: '/devices'
       fullPath: '/app/devices'
-      preLoaderRoute: typeof AppDevicesRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppDevicesRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/analytics': {
-      id: '/app/analytics'
+    '/_authenticated/app/analytics': {
+      id: '/_authenticated/app/analytics'
       path: '/analytics'
       fullPath: '/app/analytics'
-      preLoaderRoute: typeof AppAnalyticsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppAnalyticsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
-    '/app/alerts': {
-      id: '/app/alerts'
+    '/_authenticated/app/alerts': {
+      id: '/_authenticated/app/alerts'
       path: '/alerts'
       fullPath: '/app/alerts'
-      preLoaderRoute: typeof AppAlertsRouteImport
-      parentRoute: typeof AppRoute
+      preLoaderRoute: typeof AuthenticatedAppAlertsRouteImport
+      parentRoute: typeof AuthenticatedAppRoute
     }
   }
 }
 
-interface AppRouteChildren {
-  AppAlertsRoute: typeof AppAlertsRoute
-  AppAnalyticsRoute: typeof AppAnalyticsRoute
-  AppDevicesRoute: typeof AppDevicesRoute
-  AppMaintenanceRoute: typeof AppMaintenanceRoute
-  AppMonitoringRoute: typeof AppMonitoringRoute
-  AppQualityRoute: typeof AppQualityRoute
-  AppTechniciansRoute: typeof AppTechniciansRoute
-  AppVillagesRoute: typeof AppVillagesRoute
-  AppWaterPointsRoute: typeof AppWaterPointsRoute
-  AppIndexRoute: typeof AppIndexRoute
+interface AuthenticatedAppRouteChildren {
+  AuthenticatedAppAlertsRoute: typeof AuthenticatedAppAlertsRoute
+  AuthenticatedAppAnalyticsRoute: typeof AuthenticatedAppAnalyticsRoute
+  AuthenticatedAppDevicesRoute: typeof AuthenticatedAppDevicesRoute
+  AuthenticatedAppMaintenanceRoute: typeof AuthenticatedAppMaintenanceRoute
+  AuthenticatedAppMonitoringRoute: typeof AuthenticatedAppMonitoringRoute
+  AuthenticatedAppQualityRoute: typeof AuthenticatedAppQualityRoute
+  AuthenticatedAppTechniciansRoute: typeof AuthenticatedAppTechniciansRoute
+  AuthenticatedAppVillagesRoute: typeof AuthenticatedAppVillagesRoute
+  AuthenticatedAppWaterPointsRoute: typeof AuthenticatedAppWaterPointsRoute
+  AuthenticatedAppIndexRoute: typeof AuthenticatedAppIndexRoute
 }
 
-const AppRouteChildren: AppRouteChildren = {
-  AppAlertsRoute: AppAlertsRoute,
-  AppAnalyticsRoute: AppAnalyticsRoute,
-  AppDevicesRoute: AppDevicesRoute,
-  AppMaintenanceRoute: AppMaintenanceRoute,
-  AppMonitoringRoute: AppMonitoringRoute,
-  AppQualityRoute: AppQualityRoute,
-  AppTechniciansRoute: AppTechniciansRoute,
-  AppVillagesRoute: AppVillagesRoute,
-  AppWaterPointsRoute: AppWaterPointsRoute,
-  AppIndexRoute: AppIndexRoute,
+const AuthenticatedAppRouteChildren: AuthenticatedAppRouteChildren = {
+  AuthenticatedAppAlertsRoute: AuthenticatedAppAlertsRoute,
+  AuthenticatedAppAnalyticsRoute: AuthenticatedAppAnalyticsRoute,
+  AuthenticatedAppDevicesRoute: AuthenticatedAppDevicesRoute,
+  AuthenticatedAppMaintenanceRoute: AuthenticatedAppMaintenanceRoute,
+  AuthenticatedAppMonitoringRoute: AuthenticatedAppMonitoringRoute,
+  AuthenticatedAppQualityRoute: AuthenticatedAppQualityRoute,
+  AuthenticatedAppTechniciansRoute: AuthenticatedAppTechniciansRoute,
+  AuthenticatedAppVillagesRoute: AuthenticatedAppVillagesRoute,
+  AuthenticatedAppWaterPointsRoute: AuthenticatedAppWaterPointsRoute,
+  AuthenticatedAppIndexRoute: AuthenticatedAppIndexRoute,
 }
 
-const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+const AuthenticatedAppRouteWithChildren =
+  AuthenticatedAppRoute._addFileChildren(AuthenticatedAppRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAppRoute: typeof AuthenticatedAppRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAppRoute: AuthenticatedAppRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AppRoute: AppRouteWithChildren,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

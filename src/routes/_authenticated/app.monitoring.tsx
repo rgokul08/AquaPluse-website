@@ -15,7 +15,7 @@ import { PageHeader, StatCard } from "@/components/stat-card";
 import { SourceBadge, StatusBadge } from "@/components/status-badge";
 import { flowSeries, statusCounts, waterPoints } from "@/lib/demo-data";
 
-export const Route = createFileRoute("/app/monitoring")({
+export const Route = createFileRoute("/_authenticated/app/monitoring")({
   head: () => ({
     meta: [
       { title: "Live Monitoring | AquaPulse" },

@@ -5,7 +5,7 @@ import { SourceBadge } from "@/components/status-badge";
 import { Progress } from "@/components/ui/progress";
 import { technicians, tickets, villageById } from "@/lib/demo-data";
 
-export const Route = createFileRoute("/app/technicians")({
+export const Route = createFileRoute("/_authenticated/app/technicians")({
   head: () => ({
     meta: [
       { title: "Technicians | AquaPulse" },

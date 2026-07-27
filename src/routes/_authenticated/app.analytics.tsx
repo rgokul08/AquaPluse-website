@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/table";
 import { uptimeSeries, villageById, villages, waterPoints } from "@/lib/demo-data";
 
-export const Route = createFileRoute("/app/analytics")({
+export const Route = createFileRoute("/_authenticated/app/analytics")({
   head: () => ({
     meta: [
       { title: "Analytics | AquaPulse" },

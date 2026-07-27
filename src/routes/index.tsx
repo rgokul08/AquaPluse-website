@@ -38,11 +38,17 @@ function Landing() {
             </span>
             <span className="font-display text-lg font-semibold tracking-tight">AquaPulse</span>
           </span>
-          <Button asChild size="sm">
-            <Link to="/app">
-              Open control centre <ArrowRight aria-hidden className="size-4" />
-            </Link>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button asChild variant="ghost" size="sm">
+              <Link to="/auth">Sign in</Link>
+            </Button>
+            <Button asChild size="sm">
+              <Link to="/app">
+                Open control centre <ArrowRight aria-hidden className="size-4" />
+              </Link>
+            </Button>
+          </div>
+
         </nav>
       </header>
 

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "@tanstack/react-router";
-import { FlaskConical, Moon, Sun } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { FlaskConical, LogOut, Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { supabase } from "@/integrations/supabase/client";
 
 function useTheme() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -34,9 +36,23 @@ function useTheme() {
 
 export function Topbar() {
   const { theme, toggle } = useTheme();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? null));
+  }, []);
+
+  async function signOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-background/85 px-3 backdrop-blur sm:px-5">
+    <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-border bg-background/70 px-3 backdrop-blur-xl sm:px-5">
       <SidebarTrigger className="shrink-0" />
 
       <span className="inline-flex items-center gap-1.5 rounded-full border border-simulated/35 bg-simulated/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-simulated">
@@ -45,6 +61,11 @@ export function Topbar() {
       </span>
 
       <div className="ml-auto flex items-center gap-1.5">
+        {email ? (
+          <span className="hidden max-w-[180px] truncate text-xs text-muted-foreground sm:inline">
+            {email}
+          </span>
+        ) : null}
         <Button asChild variant="ghost" size="sm">
           <Link to="/">Public site</Link>
         </Button>
@@ -59,6 +80,9 @@ export function Topbar() {
           ) : (
             <Moon aria-hidden className="size-4" />
           )}
+        </Button>
+        <Button variant="ghost" size="icon" onClick={signOut} aria-label="Sign out">
+          <LogOut aria-hidden className="size-4" />
         </Button>
       </div>
     </header>

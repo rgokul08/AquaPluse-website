@@ -2,9 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Activity, AlertTriangle, Droplets, Gauge, Users, Wrench } from "lucide-react";
 import {
   Area,
-  AreaChart,
+  Cell,
   CartesianGrid,
+  ComposedChart,
   Legend,
+  Line,
+  Pie,
+  PieChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -14,7 +18,6 @@ import {
 import { PageHeader, StatCard } from "@/components/stat-card";
 import { SourceBadge, StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import {
   alerts,
   flowSeries,
@@ -25,7 +28,16 @@ import {
   waterPoints,
 } from "@/lib/demo-data";
 
-export const Route = createFileRoute("/app/")({
+const statusColor: Record<string, string> = {
+  HEALTHY: "var(--color-healthy)",
+  WARNING: "var(--color-warning)",
+  CRITICAL: "var(--color-critical)",
+  FAILED: "var(--color-failed)",
+  OFFLINE: "var(--color-offline)",
+};
+
+
+export const Route = createFileRoute("/_authenticated/app/")({
   head: () => ({
     meta: [
       { title: "Operations Overview | AquaPulse" },
@@ -54,10 +66,15 @@ function OverviewPage() {
     .filter((w) => w.status !== "HEALTHY")
     .sort((a, b) => a.healthScore - b.healthScore)
     .slice(0, 5);
+  const donutData = (Object.keys(statusCounts) as Array<keyof typeof statusCounts>)
+    .map((name) => ({ name, value: statusCounts[name] }))
+    .filter((d) => d.value > 0);
+
 
   return (
     <>
       <PageHeader
+        eyebrow="Control room"
         title="Operations overview"
         description={`${total} monitored water points across ${villages.length} villages. Every figure below is derived from the AquaPulse simulator.`}
         actions={
@@ -103,23 +120,26 @@ function OverviewPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <section className="panel p-4 sm:p-5 lg:col-span-2">
+        <section className="glass-panel p-4 sm:p-5 lg:col-span-2">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <h2 className="text-base font-semibold">Network flow · last 24 hours</h2>
+              <h2 className="font-display text-base font-semibold tracking-tight">
+                Network flow · last 24 hours
+              </h2>
               <p className="text-xs text-muted-foreground">
-                Average litres/minute and total village usage
+                Flow rate (L/min, left axis) against total village usage (L, right axis)
               </p>
             </div>
             <SourceBadge source="SIMULATED" />
           </div>
           <div className="mt-4 h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={flowSeries} margin={{ left: -18, right: 6, top: 6 }}>
+              <ComposedChart data={flowSeries} margin={{ left: -14, right: -6, top: 6 }}>
                 <defs>
                   <linearGradient id="flowFill" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="var(--color-chart-1)" stopOpacity={0.55} />
-                    <stop offset="100%" stopColor="var(--color-chart-1)" stopOpacity={0.02} />
+                    <stop offset="0%" stopColor="var(--color-chart-1)" stopOpacity={0.5} />
+                    <stop offset="60%" stopColor="var(--color-chart-1)" stopOpacity={0.14} />
+                    <stop offset="100%" stopColor="var(--color-chart-1)" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid
@@ -131,9 +151,29 @@ function OverviewPage() {
                   dataKey="hour"
                   tick={{ fontSize: 11 }}
                   stroke="var(--color-muted-foreground)"
+                  tickLine={false}
+                  axisLine={false}
                   interval={3}
                 />
-                <YAxis tick={{ fontSize: 11 }} stroke="var(--color-muted-foreground)" />
+                <YAxis
+                  yAxisId="flow"
+                  tick={{ fontSize: 11 }}
+                  stroke="var(--color-chart-1)"
+                  tickLine={false}
+                  axisLine={false}
+                  domain={["dataMin - 5", "dataMax + 5"]}
+                  width={54}
+                />
+                <YAxis
+                  yAxisId="usage"
+                  orientation="right"
+                  tick={{ fontSize: 11 }}
+                  stroke="var(--color-chart-2)"
+                  tickLine={false}
+                  axisLine={false}
+                  domain={["dataMin - 50", "dataMax + 50"]}
+                  width={58}
+                />
                 <Tooltip
                   contentStyle={{
                     background: "var(--color-popover)",
@@ -145,49 +185,93 @@ function OverviewPage() {
                 />
                 <Legend wrapperStyle={{ fontSize: 12 }} />
                 <Area
+                  yAxisId="flow"
                   type="monotone"
                   dataKey="flow"
                   name="Flow (L/min)"
                   stroke="var(--color-chart-1)"
                   fill="url(#flowFill)"
-                  strokeWidth={2}
+                  strokeWidth={2.25}
+                  activeDot={{ r: 4 }}
                 />
-                <Area
+                <Line
+                  yAxisId="usage"
                   type="monotone"
                   dataKey="usage"
                   name="Usage (L)"
                   stroke="var(--color-chart-2)"
-                  fill="transparent"
                   strokeWidth={2}
+                  strokeDasharray="5 4"
+                  dot={false}
                 />
-              </AreaChart>
+              </ComposedChart>
             </ResponsiveContainer>
           </div>
         </section>
 
-        <section className="panel p-4 sm:p-5">
-          <h2 className="text-base font-semibold">Health distribution</h2>
+        <section className="glass-panel p-4 sm:p-5">
+          <h2 className="font-display text-base font-semibold tracking-tight">
+            Health distribution
+          </h2>
           <p className="text-xs text-muted-foreground">
             Current classification of every water point
           </p>
-          <ul className="mt-4 space-y-4">
-            {(Object.keys(statusCounts) as Array<keyof typeof statusCounts>).map((status) => (
-              <li key={status}>
-                <div className="flex items-center justify-between gap-3">
-                  <StatusBadge status={status} />
-                  <span className="numeric text-sm font-medium">{statusCounts[status]}</span>
-                </div>
-                <Progress
-                  value={(statusCounts[status] / waterPoints.length) * 100}
-                  className="mt-2 h-1.5"
+          <div className="relative mt-2 h-44">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={donutData}
+                  dataKey="value"
+                  nameKey="name"
+                  innerRadius="66%"
+                  outerRadius="94%"
+                  paddingAngle={3}
+                  stroke="var(--color-card)"
+                  strokeWidth={2}
+                >
+                  {donutData.map((d) => (
+                    <Cell key={d.name} fill={statusColor[d.name]} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    background: "var(--color-popover)",
+                    border: "1px solid var(--color-border)",
+                    borderRadius: 12,
+                    color: "var(--color-popover-foreground)",
+                    fontSize: 12,
+                  }}
                 />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="pointer-events-none absolute inset-0 grid place-items-center">
+              <div className="text-center">
+                <p className="numeric text-2xl font-semibold leading-none">{total}</p>
+                <p className="mt-1 text-[11px] text-muted-foreground">water points</p>
+              </div>
+            </div>
+          </div>
+          <ul className="mt-3 grid grid-cols-1 gap-1.5">
+            {donutData.map((d) => (
+              <li
+                key={d.name}
+                className="flex items-center justify-between gap-2 rounded-lg border border-border/60 bg-surface/60 px-2.5 py-1.5"
+              >
+                <StatusBadge status={d.name as keyof typeof statusCounts} />
+                <span className="flex items-baseline gap-1.5">
+                  <span className="numeric text-sm font-semibold">{d.value}</span>
+                  <span className="numeric text-[11px] text-muted-foreground">
+                    {Math.round((d.value / total) * 100)}%
+                  </span>
+                </span>
               </li>
             ))}
           </ul>
         </section>
       </div>
 
-      <section className="panel overflow-hidden">
+      <section className="glass-panel overflow-hidden">
+
         <div className="flex items-center justify-between gap-3 border-b border-border p-4 sm:p-5">
           <div>
             <h2 className="text-base font-semibold">Needs attention</h2>

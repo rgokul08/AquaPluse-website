@@ -39,7 +39,7 @@ import {
   type WaterPoint,
 } from "@/lib/demo-data";
 
-export const Route = createFileRoute("/app/water-points")({
+export const Route = createFileRoute("/_authenticated/app/water-points")({
   head: () => ({
     meta: [
       { title: "Water Points | AquaPulse" },

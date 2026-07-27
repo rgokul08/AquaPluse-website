@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/table";
 import { devices, waterPointById } from "@/lib/demo-data";
 
-export const Route = createFileRoute("/app/devices")({
+export const Route = createFileRoute("/_authenticated/app/devices")({
   head: () => ({
     meta: [
       { title: "IoT Devices | AquaPulse" },

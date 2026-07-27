@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import { qualityReadings, waterPointById } from "@/lib/demo-data";
 
-export const Route = createFileRoute("/app/quality")({
+export const Route = createFileRoute("/_authenticated/app/quality")({
   head: () => ({
     meta: [
       { title: "Water Quality | AquaPulse" },

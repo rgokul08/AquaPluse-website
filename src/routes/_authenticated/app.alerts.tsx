@@ -7,7 +7,7 @@ import { SourceBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { alerts as seedAlerts, waterPointById, type Alert } from "@/lib/demo-data";
 
-export const Route = createFileRoute("/app/alerts")({
+export const Route = createFileRoute("/_authenticated/app/alerts")({
   head: () => ({
     meta: [
       { title: "Alerts | AquaPulse" },

@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/stat-card";
 import { SourceBadge, StatusBadge } from "@/components/status-badge";
 import { villages, waterPoints } from "@/lib/demo-data";
 
-export const Route = createFileRoute("/app/villages")({
+export const Route = createFileRoute("/_authenticated/app/villages")({
   head: () => ({
     meta: [
       { title: "Villages & Habitations | AquaPulse" },

@@ -20,7 +20,7 @@ import {
   type Ticket,
 } from "@/lib/demo-data";
 
-export const Route = createFileRoute("/app/maintenance")({
+export const Route = createFileRoute("/_authenticated/app/maintenance")({
   head: () => ({
     meta: [
       { title: "Maintenance | AquaPulse" },

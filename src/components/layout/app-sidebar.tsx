@@ -66,35 +66,40 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border">
-        <Link to="/app" className="flex items-center gap-2.5 px-2 py-2">
+        <Link to="/app" className="flex items-center gap-2.5 px-1.5 py-1.5">
           <span className="pulse-gradient grid size-8 shrink-0 place-items-center rounded-lg">
             <Gauge aria-hidden className="size-4.5 text-primary-foreground" />
           </span>
           {!collapsed && (
             <span className="flex flex-col leading-tight">
               <span className="font-display text-sm font-semibold tracking-tight">AquaPulse</span>
-              <span className="text-[11px] text-sidebar-foreground/60">Water intelligence</span>
+              <span className="text-[10px] uppercase tracking-[0.14em] text-sidebar-foreground/50">
+                Water intelligence
+              </span>
             </span>
           )}
         </Link>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="gap-0.5 py-1">
         {groups.map((group) => (
-          <SidebarGroup key={group.label}>
-            <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+          <SidebarGroup key={group.label} className="px-1.5 py-1">
+            <SidebarGroupLabel className="h-6 px-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-sidebar-foreground/45">
+              {group.label}
+            </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu>
+              <SidebarMenu className="gap-0.5">
                 {group.items.map((item) => (
                   <SidebarMenuItem key={item.url}>
                     <SidebarMenuButton
                       asChild
                       isActive={isActive(item.url, item.exact)}
                       tooltip={item.title}
+                      className="h-8 gap-3 rounded-md px-2 text-[13px]"
                     >
                       <Link to={item.url}>
-                        <item.icon aria-hidden className="size-4" />
-                        <span>{item.title}</span>
+                        <item.icon aria-hidden className="size-4 shrink-0" />
+                        <span className="truncate">{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -104,6 +109,7 @@ export function AppSidebar() {
           </SidebarGroup>
         ))}
       </SidebarContent>
+
 
       <SidebarFooter className="border-t border-sidebar-border">
         {!collapsed && (
